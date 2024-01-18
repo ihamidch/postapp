@@ -8,8 +8,9 @@ const Banner = () => {
 
     const handleClick = ((data)=>{
       console.log(data,"row---")
+      // localStorage.setItem("blog-data",JSON.stringify(data))
       if(data){
-        navigate(`/BlogDetail/${data.id}`);
+        navigate(`/BlogDetail/${data.id}`, { state: data });
       }
     })
   return (
@@ -33,9 +34,9 @@ const Banner = () => {
                   <h5 className="card-title">{item.title}</h5>
                   <p className="card-text">{item.body}</p>
                   {/* Use Link to navigate to BlogDetail */}
-                  <Link to={`/BlogDetail/${index + 1}`} state={item}> {/* Assuming index + 1 as an identifier */}
-                    <button onClick={()=>handleClick(item,index)}>Read More</button>
-                  </Link>
+                  {/* <Link to={`/BlogDetail/${index + 1}`} state={item}> Assuming index + 1 as an identifier */}
+                    <button onClick={()=>handleClick(item)}>Read More</button>
+                  {/* </Link> */}
                 </div>
               </div>
             </div>
