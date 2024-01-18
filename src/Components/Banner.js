@@ -6,9 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 const Banner = () => {
     const navigate = useNavigate();
 
-    const handleClick = (index) => {
-      navigate(`/BlogDetail/${index + 1}`);
-    };
+    const handleClick = ((data)=>{
+      console.log(data,"row---")
+      if(data){
+        navigate(`/BlogDetail/${data.id}`);
+      }
+    })
   return (
     <div>
          <>
@@ -30,8 +33,8 @@ const Banner = () => {
                   <h5 className="card-title">{item.title}</h5>
                   <p className="card-text">{item.body}</p>
                   {/* Use Link to navigate to BlogDetail */}
-                  <Link to={`/BlogDetail/${index + 1}`}> {/* Assuming index + 1 as an identifier */}
-                    <button onClick={()=>handleClick(index)}>Read More</button>
+                  <Link to={`/BlogDetail/${index + 1}`} state={item}> {/* Assuming index + 1 as an identifier */}
+                    <button onClick={()=>handleClick(item,index)}>Read More</button>
                   </Link>
                 </div>
               </div>
