@@ -25,15 +25,8 @@
       "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
     },
   ]
-  const students = [
-    {
-      "id": 1,
-      "name": "Leanne Graham",
-      "username": "Bret",
-      "email": "test@gmail.com"
-    },
-  ]
+  
    
     
 
-  export {data,students};
+  export default data;

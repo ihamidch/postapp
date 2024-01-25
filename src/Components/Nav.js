@@ -36,7 +36,6 @@ const Nav = () => {
           </li>
         </ul>
         <form class="d-flex ms-auto">
-        {/* <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/> */}
         <button class="btn btn-outline-success" type="submit">Blog</button>
         <button class="btn btn-outline-success mx-2" type="submit">Details</button>
       </form>

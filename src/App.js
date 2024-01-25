@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Banner from './Components/Banner';
 import BlogDetail from './Components/BlogDetail';
 import Nav from './Components/Nav';
+import Faches from './Components/Faches';
 
 const App = () => {
   return (
@@ -15,6 +16,10 @@ const App = () => {
         <Route path="/BlogDetail/:id" element={<BlogDetail />} />
       </Routes>
     </Router>
+    // <>
+    // <Faches/>
+    // </>
+    
   );
 };
 
