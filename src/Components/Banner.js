@@ -1,27 +1,48 @@
-import React from 'react';
-import data from './Data';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const Banner = () => {
-  const [blogs, setBlogs] = React.useState(data);
+  const [data, setData] = useState([]);
+ const [loader, setLoader] = useState(false);
 
-  return (
+  useEffect(() => {
+    setLoader(true)
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json()) // Fix 2: Correct the spelling of 'json', not 'jason'
+      .then((result) => {
+        setData(result);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoader(false)
+      });
+  }, []);
+  const handleDelete = (id) => {
+    const newData = data.filter((item) => item.id !== id);
+    setData(newData);
+  };
+  return ( 
     <div>
-      <>
-        <div className="container d-flex">
-          <div className="col-md-6 left">
-            <h2 className="fs-1 fw-bold my-xl-5 ">Articles for <br /><span className="text-success "> front-end devs</span></h2>
-            <h3 className="cc"> on web performance, <br /> responsive web design and more</h3>
-          </div>
-          <div className="col-md-6 right">
-            <img className="w-100 " src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRGypJJpy6KoVEVGpBXMzTOoz28bilLONjl042Ae-v36YmxQ7ys" alt="" />
-          </div>
+      <div className="container d-flex">
+        <div className="col-md-6 left">
+          <h2 className="fs-1 fw-bold my-xl-5">Articles for <br /><span className="text-success"> front-end devs</span></h2>
+          <h3 className="cc"> on web performance, <br /> responsive web design and more</h3>
         </div>
-        {blogs.map((blog) => {
-          const { id, title, body, userId } = blog;
-          return (
-            <Link to={`/BlogDetail/${id}`} key={id} className="text-decoration-none text-dark">
+        <div className="col-md-6 right">
+          <img className="w-100 " src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRGypJJpy6KoVEVGpBXMzTOoz28bilLONjl042Ae-v36YmxQ7ys" alt="" />
+        </div>
+      </div>
+      <div className="container">
+        <Link to="/Add" className="text-decoration-none text-dark">
+      <button className="btn btn-primary">Add</button>
+      </Link>
+      {data.map((blog) => {
+        const { id, title, body, userId } = blog;
+        return (
+          <div key={id} className='container'>
+            <Link to={`/BlogDetail/${id}`} className="text-decoration-none text-dark">
               <div className="container mt-5">
                 <div className="row">
                   <div className="col-md-2">
@@ -36,11 +57,16 @@ const Banner = () => {
                 </div>
               </div>
             </Link>
-          );
-        })}
-      </>
+            <button className="btn btn-danger" onClick={() => handleDelete(id)}>Delete</button>
+          </div>
+
+        );
+      }
+      )}
+    </div>
     </div>
   );
-};
+}
+
 
 export default Banner;

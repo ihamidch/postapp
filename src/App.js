@@ -1,24 +1,23 @@
-// App.js or index.js
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Banner from './Components/Banner';
 import BlogDetail from './Components/BlogDetail';
 import Nav from './Components/Nav';
-import Faches from './Components/Faches';
+import Add from './Components/Add';
 
 const App = () => {
   return (
     
+   
     <Router>
-      <Nav /> 
+      <Nav />
       <Routes>
-        <Route path="/" element={<Banner/>} />
+        <Route path="/" element={<Banner />} />
         <Route path="/BlogDetail/:id" element={<BlogDetail />} />
+        <Route path="/Add" element={<Add />} />
       </Routes>
     </Router>
-    // <>
-    // <Faches/>
-    // </>
     
   );
 };

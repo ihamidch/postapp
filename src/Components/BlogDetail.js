@@ -1,46 +1,39 @@
-// BlogDetail.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import data from './Data';
-import { useNavigate } from 'react-router-dom';
 
 const BlogDetail = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const blog = data.find((blog) => blog.id === parseInt(id));
+  const [blog, setBlog] = useState(null);
 
-  if (!blog) {
-    return <p>Blog not found</p>;
-  }
+  useEffect(() => {
+    const fetchBlogById = async () => {
+      try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch blog');
+        }
+        const blogData = await response.json();
+        setBlog(blogData);
+      } catch (error) {
+        console.error('Error fetching blog:', error);
+      }
+    };
 
-  const handleDelete = () => {
-    const shouldDelete = window.confirm('Are you sure you want to delete this post?');
-
-    if (shouldDelete) {
-
-      const newData = data.filter((blog) => blog.id !== parseInt(id));
-      navigate('/'); 
-    }
-  };
-
-  const { title, body, userId } = blog;
+    fetchBlogById();
+  }, [id]);
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-2">
-          <img className="w-100" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRGypJJpy6KoVEVGpBXMzTOoz28bilLONjl042Ae-v36YmxQ7ys" alt="" />
-        </div>
-        <div className="col-md-10">
-          <h3 className="fs-3 fw-bold">{title}</h3>
-          <p className="fs-5">{body}</p>
-          <p className="fs-5">ID: {id}</p>
-          <p className="fs-5">User ID: {userId}</p>
-          <button className="btn btn-danger" onClick={handleDelete}>
-            Delete
-          </button>
-        </div>
-      </div>
+    <div>
+      {blog ? (
+        <>
+          <h2>{blog.title}</h2>
+          <p>{blog.body}</p>
+          <p>ID: {blog.id}</p>
+          <p>User ID: {blog.userId}</p>
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };
